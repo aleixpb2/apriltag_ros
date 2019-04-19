@@ -68,6 +68,7 @@ void ContinuousDetector::imageCallback (
     const sensor_msgs::ImageConstPtr& image_rect,
     const sensor_msgs::CameraInfoConstPtr& camera_info)
 {
+  auto start = std::chrono::steady_clock::now();
   // Convert ROS's sensor_msgs::Image to cv_bridge::CvImagePtr in order to run
   // AprilTags 2 on the iamge
   try
@@ -92,6 +93,9 @@ void ContinuousDetector::imageCallback (
     tag_detector_->drawDetections(cv_image_);
     tag_detections_image_publisher_.publish(cv_image_->toImageMsg());
   }
+  auto end = std::chrono::steady_clock::now();
+  std::chrono::duration<double> elapsed_seconds = end-start;
+  std::cout << "Time (s): " << elapsed_seconds.count() << std::endl;
 }
 
 } // namespace apriltags2_ros
