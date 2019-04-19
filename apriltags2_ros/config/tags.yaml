@@ -19,7 +19,12 @@
 #   ]
 standalone_tags:
   [
+     {id: 0, size: 0.17392},
+     {id: 1, size: 0.17392},
+     {id: 2, size: 0.04092},
+     {id: 3, size: 0.05997}
   ]
+                                      
 # ## Tag bundle definitions
 # ### Remarks
 #
@@ -43,4 +48,13 @@ standalone_tags:
 #   ]
 tag_bundles:
   [
+    {
+      name: 'my_bundle',
+      layout:
+        [
+          {id: 1, size: 0.17392, x: 0.0000, y: 0.0000, z: 0.0000, qw: 1.0000, qx: 0.0000, qy: 0.0000, qz: 0.0000},
+          {id: 3, size: 0.05997, x: 0.0000, y: 0.1150, z: 0.0000, qw: 1.0000, qx: 0.0000, qy: 0.0000, qz: 0.0000}
+
+        ]
+    }
   ]
