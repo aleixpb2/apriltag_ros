@@ -68,10 +68,9 @@ void ContinuousDetector::imageCallback (
     const sensor_msgs::ImageConstPtr& image_rect,
     const sensor_msgs::CameraInfoConstPtr& camera_info)
 {
-  auto start = std::chrono::steady_clock::now();
+  //auto start = std::chrono::steady_clock::now();
   // Convert ROS's sensor_msgs::Image to cv_bridge::CvImagePtr in order to run
   // AprilTags 2 on the iamge
-  auto start_cv = std::chrono::steady_clock::now();
   try
   {    
     cv_image_ = cv_bridge::toCvCopy(image_rect,
@@ -82,13 +81,12 @@ void ContinuousDetector::imageCallback (
     ROS_ERROR("cv_bridge exception: %s", e.what());
     return;
   }
-  auto end_cv = std::chrono::steady_clock::now();
 
   // Publish detected tags in the image by AprilTags 2
-  auto start_detect = std::chrono::steady_clock::now();
+  //auto start_detect = std::chrono::steady_clock::now();
   tag_detections_publisher_.publish(
       tag_detector_->detectTags(cv_image_,camera_info));
-  auto end_detect = std::chrono::steady_clock::now();
+  //auto end_detect = std::chrono::steady_clock::now();
 
   // Publish the camera image overlaid by outlines of the detected tags and
   // their payload values
@@ -97,14 +95,13 @@ void ContinuousDetector::imageCallback (
     tag_detector_->drawDetections(cv_image_);
     tag_detections_image_publisher_.publish(cv_image_->toImageMsg());
   }
-  auto end = std::chrono::steady_clock::now();
+  //auto end = std::chrono::steady_clock::now();
 
-  std::chrono::duration<double> elapsed_seconds = end_cv-start_cv;
-  std::cout << "Time cv_bridge::toCvCopy (ms): " << elapsed_seconds.count()*1000 << std::endl;
-  elapsed_seconds = end_detect-start_detect;
-  std::cout << "Time detectTags (ms): " << elapsed_seconds.count()*1000 << std::endl;
-  elapsed_seconds = end-start;
-  std::cout << "Total time (ms): " << elapsed_seconds.count()*1000 << std::endl;
+  //std::chrono::duration<double> elapsed_seconds;
+  //elapsed_seconds = end_detect-start_detect;
+  //std::cout << "Time detectTags (ms): " << elapsed_seconds.count()*1000 << std::endl;
+  //elapsed_seconds = end-start;
+  //std::cout << "Total time (ms): " << elapsed_seconds.count()*1000 << std::endl;
 }
 
 } // namespace apriltags2_ros
